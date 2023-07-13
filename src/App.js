@@ -8,18 +8,20 @@ import {
 import Home from './pages/Home/Home';
 import Wrapper from './components/Wrapper/Wrapper';
 import Login from './pages/Login/Login';
+import Tesrest from './pages/test';
 
 const App = () => {
   return (
     <div className='w-full min-h-screen bg-gray-900'>
-      <Wrapper>
         <Router>
             <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/login" component={Login}/>
+                <Route path="/login" component={Login}/>  
+                <Wrapper>
+                  <Route path="/dashboard" component={Home}/>
+                  <Route path="/test" component={Tesrest}/>
+                </Wrapper>
             </Switch>
         </Router>
-      </Wrapper>
     </div>
     
       

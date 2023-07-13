@@ -2,12 +2,23 @@ import React, { useState } from 'react';
 import { datalogin } from "./logindata";
 import FormItem from '../../components/Form/FormItem';
 import math from "../../img/math.png";
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [newItem, setNewItem] = useState(datalogin);
-
+  const [cookies, setCookie] = useCookies(['token']);
+  const history = useHistory()
   const handleSubmitForm = () => {
-    alert("Submitted");
+    const dummydata = {
+      "status": true,
+      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMzQuMTAxLjE0NS40OTo4MDA0L2FwaS9sb2dpbiIsImlhdCI6MTY4OTIxOTY5OCwiZXhwIjoxNjg5MjIzMjk4LCJuYmYiOjE2ODkyMTk2OTgsImp0aSI6IjBuWmVvZVBQelpjeTZKZFkiLCJzdWIiOiI0IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6IHtmZwuZCu2b1jyx1psy9rtwQfwbhIgpIB3RBWFmqk",
+      "token_type": "bearer",
+      "expires_in": 604800
+    }
+    setCookie('token', dummydata.access_token, { path: '/' });
+    history.push("/")
   };
 
   // const handleKeyDown = (e) => {
@@ -18,7 +29,7 @@ const Login = () => {
 
   return (
     <div className='w-12/12 m-auto grid grid-cols-2 h-screen'>
-      <div className='w-5/12 m-auto h-11/12'>
+      <div className='w-6/12 m-auto h-11/12'>
         <div className='w-12/12 text-center'>
           <img
             className='w-9/12'
@@ -47,7 +58,11 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <div className='w-full' style={{ backgroundImage: `url(${math})`, backgroundSize: 'cover' }} />
+      <div className='w-full m-auto' style={{ backgroundImage: `url(${math})`, backgroundSize: 'cover' }}>
+        <div className='mt-52 text-center'>
+           <p className='text-2xl font-bold text-yellow-300'>Genggam Dunia Dengan <strong className='text-gray-500'>MATEMATIKA</strong></p>
+        </div>
+      </div>
     </div>
   );
 };
