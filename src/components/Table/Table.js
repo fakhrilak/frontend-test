@@ -7,10 +7,10 @@ const Table = ({data}) => {
         header.map((data,index)=>{
             result.push(
                 <td key={index} class="py-3 px-6 text-left whitespace-nowrap">
-                    {/* {data.data.map((bodydata,index)=>(
+                    {data.data.map((bodydata,index)=>(
                         <p key={index}>{object[bodydata]}</p>
-                    ))} */}
-                    {Halper(data,object)}
+                    ))}
+                    {/* {Halper(data,object)} */}
                 </td>
             )
         })
