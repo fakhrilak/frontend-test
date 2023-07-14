@@ -2,11 +2,13 @@ export const datalogin =[
     {
         "name" : "username",
         "place_holder" : "Username",
-        "value" : ""
+        "value" : "",
+        "type" : "string"
     },
     {
         "name" : "password",
         "place_holder" : "Password",
-        "value" : ""
+        "value" : "",
+        "type" : "password"
     }
 ]

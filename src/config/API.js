@@ -1,8 +1,6 @@
-import A from "socket.io-client"
 import axios from 'axios';
-let url = "http://5085f3f5feff.ngrok.io"
-export const musicUrl = "http://50e3dd71caa0.ngrok.io"
-export const API = axios.create({baseURL: url+`/blogger`});
+export const url = "http://34.101.145.49:8004/api"
+export const API = axios.create({baseURL: url});
 // Alter defaults after instance has been created
 export const setAuthToken = (token) => {
 	if (token) {
@@ -11,7 +9,6 @@ export const setAuthToken = (token) => {
 		delete API.defaults.headers.common['Authorization'];
 	}
 };
-export const path = url+"/blogger/single/"
 export const config = {
 	headers: {
 		'Content-Type': 'application/json'

@@ -8,12 +8,14 @@ const FormItem = (props) => {
             name : props.newItem[props.index].name,
             value : item
         }
+        props.setNewItem(datas)
     },[item])
   return (
     <div>
         <p className='text-gray-300'>{props.data.place_holder}</p>
         <input
             className='rounded text-center w-full h-8'
+            type={props.data.type}
             value={item}
             placeholder={props.data.name}
             onChange={(e)=>setItem(e.target.value)}

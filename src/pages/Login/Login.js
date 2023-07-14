@@ -5,27 +5,28 @@ import math from "../../img/math.png";
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
+import { API, config, setAuthToken } from '../../config/API';
 
 const Login = () => {
   const [newItem, setNewItem] = useState(datalogin);
   const [cookies, setCookie] = useCookies(['token']);
   const history = useHistory()
   const handleSubmitForm = () => {
-    const dummydata = {
-      "status": true,
-      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMzQuMTAxLjE0NS40OTo4MDA0L2FwaS9sb2dpbiIsImlhdCI6MTY4OTIxOTY5OCwiZXhwIjoxNjg5MjIzMjk4LCJuYmYiOjE2ODkyMTk2OTgsImp0aSI6IjBuWmVvZVBQelpjeTZKZFkiLCJzdWIiOiI0IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6IHtmZwuZCu2b1jyx1psy9rtwQfwbhIgpIB3RBWFmqk",
-      "token_type": "bearer",
-      "expires_in": 604800
+    let data = {}
+    for(let i=0;i<newItem.length;i++){
+      data[newItem[i]["name"]]=newItem[i]["value"]
     }
-    setCookie('token', dummydata.access_token, { path: '/' });
-    history.push("/")
+    API.post("/login",data,config)
+    .then((res)=>{
+      setCookie('token', res.data.access_token, { path: '/' });
+      setCookie('data_login', res.data, { path: '/' });
+      setAuthToken(res.data.access_token)
+      history.push("/dashboard")
+    })
+    .catch((err)=>{
+      alert(err.response.data.message[0])
+    })
   };
-
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     handleSubmitForm();
-  //   }
-  // };
 
   return (
     <div className='w-12/12 m-auto grid grid-cols-2 h-screen'>
@@ -37,14 +38,13 @@ const Login = () => {
             alt='Logo'
           />
         </div>
-        <form>
           {datalogin.map((data, index) => (
             <div key={index} className='mt-5 w-9/12'>
               <FormItem
                 data={data}
                 index={index}
                 newItem={newItem}
-                setnewItem={setNewItem}
+                setNewItem={setNewItem}
               />
             </div>
           ))}
@@ -56,7 +56,6 @@ const Login = () => {
               Login
             </button>
           </div>
-        </form>
       </div>
       <div className='w-full m-auto' style={{ backgroundImage: `url(${math})`, backgroundSize: 'cover' }}>
         <div className='mt-52 text-center'>
