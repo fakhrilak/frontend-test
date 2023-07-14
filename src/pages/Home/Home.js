@@ -113,7 +113,7 @@ const Home = () => {
                 {"name":"Lokasi","data":["km_awal","km_akhir"],"type":"text"},
                 {"name":"Foto","data":["photo_url"],"type":"button"},
                 {"name" : "Document","data":["doc_url"],"type":"button"},
-                {"name":"Unit Kerja","data":["Ruas_name"],"type":"text"},
+                {"name":"Unit Kerja","data":["unit_id"],"type":"text"},
                 {"name":"Status","data":["status"],"type":"text"}
               ],
               body : dataTable

@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Halper } from './HalperTable'
 
 const Table = ({data}) => {
+    const [show,setShow] = useState(false)
     const Mapper=(object,header)=>{
         let result = []
         header.map((data,index)=>{
             result.push(
                 <td key={index} class="py-3 px-6 text-left whitespace-nowrap">
-                    {/* {data.data.map((bodydata,index)=>(
-                        <p key={index}>{object[bodydata]}</p>
-                    ))} */}
-                    {Halper(data,object)}
+                    {<Halper object={object} data={data} show={show} setShow={setShow}/>}
                 </td>
             )
         })
@@ -31,7 +29,7 @@ const Table = ({data}) => {
                 <tbody class="text-white text-sm font-light">
                         {data.body.map((x,index)=>(
                             <tr key={index}
-                            class="border-b border-gray-200 hover:bg-gray-100 hover:text-green-700"
+                            class="border-b border-gray-200 font-bold hover:bg-gray-100 hover:text-gray-700"
                             >
                                 {Mapper(x,data.header)}
                             </tr> 
