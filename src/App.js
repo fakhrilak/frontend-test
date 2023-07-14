@@ -5,10 +5,10 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Home from './pages/Home/Home';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './pages/Login/Login';
-import Tesrest from './pages/test';
 import Navbar from './components/Navbar/Navbar';
+import Masterdata from './pages/Masterdata/Masterdata';
 
 const App = () => {
   return (
@@ -17,8 +17,8 @@ const App = () => {
             <Switch>
                 <Route path="/login" component={Login}/>
                 <Navbar>
-                  <Route path="/dashboard" component={Home}/>
-                  <Route path="/test" component={Tesrest}/>
+                  <Route path="/dashboard" component={Dashboard}/>
+                  <Route path="/masterdata" component={Masterdata}/>
                 </Navbar>
             </Switch>
         </Router>

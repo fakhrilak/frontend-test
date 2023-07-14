@@ -1,5 +1,8 @@
 import React, { useState } from "react"
+import Modal from "../Modal/Modal"
 export const Halper=(props)=>{
+    const [show,setShow] = useState(false)
+
     if(props.data.type == "text"){
         let result=""
         for(let a=0;a<props.data.data.length;a++){
@@ -10,9 +13,11 @@ export const Halper=(props)=>{
                 }
                 result+=props.object[props.data.data[a]]
             }else if(props.data.name === "Status"){
-                result+=props.object[props.data.data[a]] == "0"? "Tidak Aktif":"Aktif"
+                return <p className={`${props.object[props.data.data[a]] == "0"?"text-red-500":"text-green-500"}`}>{props.object[props.data.data[a]] == "0"? "Tidak Aktif":"Aktif"}</p>
             }else if(props.data.name === "Unit Kerja"){
                 result+=`Unit Kerja ${props.object[props.data.data[a]]}`
+            }else if(props.data.name == "No"){
+                return <p>{props.no+1}</p>
             }else{
                 result+=props.object[props.data.data[a]]
             }
@@ -28,12 +33,42 @@ export const Halper=(props)=>{
             result+=props.object[props.data.data[a]]
             // console.log(object[data.data[a]])
         }
-        return <button
-        className="bg-gray-300 w-20 text-gray-900 rounded"
-        onClick={()=>{
-            props.setShow(!props.Show)
-            console.log(props.Show)}}
-        >Show</button>
+        if(props.data.name == "Foto"){
+            return <>
+                <Modal
+                    show={show} 
+                    handleshow={setShow} 
+                >
+                    <img src={result}/>
+                </Modal>
+                <button
+                className="bg-gray-300 w-20 text-gray-900 rounded"
+                onClick={()=>{
+                    setShow(!show)
+                }}
+                >Show</button>
+            </>
+        }else if(props.data.name == "Document"){
+            return<>
+            <Modal
+                show={show} 
+                handleshow={setShow} 
+            >
+                <iframe
+                    title="PDF Viewer"
+                    src={result}
+                    width="100%"
+                    height="100%"
+                />
+            </Modal>
+            <button
+            className="bg-gray-300 w-20 text-gray-900 rounded"
+            onClick={()=>{
+                setShow(!show)
+            }}
+            >Show</button>
+        </>
+        }
+        
     }
-    
 }

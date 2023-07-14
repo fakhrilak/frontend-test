@@ -1,10 +1,12 @@
 export const dataNavbar = [
     {
         "name": "DashBoard",
-        "path" : "/dashboard"
+        "path" : "/dashboard",
+        "labelPath"  : "Dashboard"
     },
     {
         "name": "Master Data",
-        "path" : "/masterdata"
+        "path" : "/masterdata",
+        "labelPath" : "Master Data Ruas"
     }
 ]

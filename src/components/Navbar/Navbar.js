@@ -1,10 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useHistory } from 'react-router-dom';
+import { useHistory,useLocation } from 'react-router-dom';
 import { dataNavbar } from './dataNavbar';
 const Navbar = (props) => {
   const [cookies] = useCookies(['token']);
+  const [path,setPath] = useState()
   const history = useHistory();
+  const location = useLocation();
+  useEffect(()=>{
+    for(let a in dataNavbar){
+      if(dataNavbar[a].path.split("/")[1] == location.pathname.split("/")[1]){
+        setPath(dataNavbar[a].labelPath)
+      }
+    }
+    
+  },[location])
 
   useEffect(() => {
     if ((!cookies.token)&&(history)){
@@ -29,7 +39,7 @@ const Navbar = (props) => {
                   {dataNavbar.map((data, index) => (
                     <a
                       key={index}
-                      href={data.path}
+                      onClick={()=>history.push(data.path)}
                       className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
                       {data.name}
@@ -40,7 +50,10 @@ const Navbar = (props) => {
             </div>
           </nav>
           <div>
-              <div className="w-10/12 m-auto h-full">{props.children}</div>
+            <div className="w-10/12 m-auto h-full mt-2 mb-10">
+              <p className='text-yellow-300 text-2xl'>{path?path:null}</p>
+            </div>
+            <div className="w-10/12 m-auto h-full">{props.children}</div>
           </div>
     </div>
    

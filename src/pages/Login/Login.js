@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { datalogin } from "./logindata";
 import FormItem from '../../components/Form/FormItem';
 import math from "../../img/math.png";
@@ -11,6 +11,11 @@ const Login = () => {
   const [newItem, setNewItem] = useState(datalogin);
   const [cookies, setCookie] = useCookies(['token']);
   const history = useHistory()
+  // useEffect(()=>{
+  //   if(cookies.token){
+  //     history.push("/dashboard")
+  //   }
+  // },[])
   const handleSubmitForm = () => {
     let data = {}
     for(let i=0;i<newItem.length;i++){
