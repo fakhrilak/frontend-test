@@ -4,30 +4,33 @@ import { API, config, setAuthToken } from '../../config/API';
 import Table from '../../components/Table/Table';
 import { useHistory } from 'react-router-dom';
 const Masterdata = () => {
-    const [cookies, removeCookie] = useCookies(['token']);
+    const [cookies,removeCookie] = useCookies(['token']);
     const [dataTable,setDataTable] = useState()
+    const [per_page,setPer_page] = useState()
+    const [page,setPage] = useState()
     const history = useHistory()
     useEffect(()=>{
         if(cookies.token){
-        setAuthToken(cookies.token)
-        }
-        API.get("/ruas?per_page=5&page=1",config)
+            setAuthToken(cookies.token)
+          }
+        API.get(`/ruas?per_page=2&page=${page}`,config)
         .then((res)=>{
-        setDataTable(res.data.data)
+            setDataTable(res.data)
+            setPage(res.data.current_page)
         })
         .catch((err)=>{
-        if(err.response.status == 401){
-            alert(err.response.data.message)
-            removeCookie("token")
-            history.push("/login")
-        }else{
-            alert(err.response.data.message)
-        }
+            if(err.response.status == 401){
+                alert(err.response.data.message)
+                removeCookie("token")
+                history.push("/login")
+            }else{
+                alert(err.response.data.message)
+            }
         })
-    },[])
+    },[page])
   return (
     <div>
-        {dataTable?<div>
+        {dataTable?<div className='w-11/12 m-auto'>
             <Table
             data={{
                 header:[
@@ -40,8 +43,11 @@ const Masterdata = () => {
                   {"name":"Status","data":["status"],"type":"text"},
                   {"name":"Aksi","data":["edit","show","deleted"],"type":"text"}
                 ],
-                body : dataTable
+                body : dataTable.data
             }}
+            res={dataTable}
+            page={page}
+            setPage={setPage}
             />
         </div>:<p>Loading...</p>}
     </div>

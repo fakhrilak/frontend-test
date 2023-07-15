@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Halper } from './HalperTable'
 
-const Table = ({data}) => {
+const Table = ({data,res,page,setPage}) => {
     const Mapper=(object,header,no)=>{
         let result = []
         header.map((data,index)=>{
@@ -14,8 +14,9 @@ const Table = ({data}) => {
         return result
     }
   return (
-    <div>
-        <table className="min-w-max w-full table-auto">
+    <div >
+        <div className='w-12/12 m-auto table-auto overflow-x-auto'>
+            <table className="min-w-max w-11/12 m-auto table-auto">
                 <thead>
                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         {data.header.map((header,index)=>(
@@ -34,7 +35,32 @@ const Table = ({data}) => {
                             </tr> 
                         ))}
                 </tbody>
-        </table>
+            </table>
+        </div>
+        
+        <div className='flex justify-between mt-5'>
+            <div/>
+            <div className='grid grid-cols-6 gap-5'>
+                    <select className='col-span-3 rounded text-center bg-gray-900 border border-gray-300 text-gray-300'>
+                        <option>1</option>
+                    </select>
+                <button className='bg-gray-900 w-10 rounded font-bold text-gray-300 border border-gray-300'
+                onClick={()=>{
+                    const prevPage = res.prev_page_url?res.prev_page_url.split("=")[1]:null
+                    setPage(prevPage)
+                }}
+                >{"<"}</button>
+                <input className='w-10 text-center rounded-full bg-gray-900 border border-gray-300 text-gray-300'
+                value={page}
+                />
+                <button className='bg-gray-900 w-10 rounded font-bold text-gray-300 border border-gray-300'
+                onClick={()=>{
+                    const nextpage = res.next_page_url?res.next_page_url.split("=")[1]:null
+                    setPage(nextpage)
+                }}
+                >{page ? ">" :null}</button>
+            </div>
+        </div>
     </div>
   )
 }

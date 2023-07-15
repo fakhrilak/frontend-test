@@ -60,7 +60,7 @@ const Dashboard = () => {
   return (
     <div>
       {chart}
-      {dataTable ?<div className='mt-10 w-12/12 overflow-x-auto'>
+      {dataTable ?<div className='mt-10 w-12/12 m-auto'>
           <Table 
           data={{
               header:[

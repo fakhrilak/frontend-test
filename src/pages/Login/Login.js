@@ -6,20 +6,17 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
 import { API, config, setAuthToken } from '../../config/API';
+import { getCoocies } from '../../halper/coocies';
 
-const Login = () => {
+const Login = (props) => {
   const [newItem, setNewItem] = useState(datalogin);
   const [cookies, setCookie] = useCookies(['token']);
   const history = useHistory()
-  // useEffect(()=>{
-  //   if(cookies.token){
-  //     history.push("/dashboard")
-  //   }
-  // },[])
   const handleSubmitForm = () => {
     let data = {}
     for(let i=0;i<newItem.length;i++){
       data[newItem[i]["name"]]=newItem[i]["value"]
+      setCookie(newItem[i]["name"],newItem[i]["value"])
     }
     API.post("/login",data,config)
     .then((res)=>{
@@ -34,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <div className='w-12/12 m-auto grid grid-cols-2 h-screen'>
+    <div className={`w-12/12 m-auto grid grid-cols-2 h-screen ${props.color}`}>
       <div className='w-6/12 m-auto h-11/12'>
         <div className='w-12/12 text-center'>
           <img
