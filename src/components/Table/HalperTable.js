@@ -1,8 +1,10 @@
 import React, { useState } from "react"
 import Modal from "../Modal/Modal"
+import DetailRuas from "../Detail/DetailRuas"
+import { FcNext } from "react-icons/fc";
 export const Halper=(props)=>{
     const [show,setShow] = useState(false)
-
+    const [type,setType] = useState()
     if(props.data.type == "text"){
         let result=""
         for(let a=0;a<props.data.data.length;a++){
@@ -68,6 +70,26 @@ export const Halper=(props)=>{
             }}
             >Show</button>
         </>
+        }else if(props.data.name == "Aksi"){
+            return<>
+                <Modal
+                    show={show} 
+                    handleshow={setShow} 
+                >
+                    {<DetailRuas data={props.object}/>}
+                </Modal>
+                <div className="grid grid-cols-3 gap-3">
+                    <button  className="w-10 m-auto bg-gray-300 rounded text-black"
+                    onClick={()=>{
+                        setType("show")
+                        setShow(!show)
+                    }}
+                    ><FcNext
+                    size={40}
+                    /></button>
+                </div>
+            </>
+            
         }
         
     }

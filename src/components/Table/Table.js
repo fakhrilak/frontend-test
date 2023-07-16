@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Halper } from './HalperTable'
 
-const Table = ({data,res,page,setPage}) => {
+const Table = ({data,res,page,setPage,per_page,setPer_page}) => {
+    const [pages,setPages] = useState([2,3,4,5])
     const Mapper=(object,header,no)=>{
         let result = []
         header.map((data,index)=>{
@@ -41,8 +42,14 @@ const Table = ({data,res,page,setPage}) => {
         <div className='flex justify-between mt-5'>
             <div/>
             <div className='grid grid-cols-6 gap-5'>
-                    <select className='col-span-3 rounded text-center bg-gray-900 border border-gray-300 text-gray-300'>
-                        <option>1</option>
+                    <select className='col-span-3 rounded text-center bg-gray-900 border border-gray-300 text-gray-300'       
+                    onChange={(e)=>setPer_page(e.target.value)}
+                    >
+                        {pages.map((data,index)=>(
+                            <option key={index}
+                            value={data}
+                            >Show : {data} entries</option>
+                        ))}
                     </select>
                 <button className='bg-gray-900 w-10 rounded font-bold text-gray-300 border border-gray-300'
                 onClick={()=>{

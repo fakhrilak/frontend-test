@@ -10,18 +10,11 @@ import Login from './pages/Login/Login';
 import Navbar from './components/Navbar/Navbar';
 import Masterdata from './pages/Masterdata/Masterdata';
 import Settings from './pages/Settings/Settings';
-import { useCookies } from 'react-cookie';
-import { setAuthToken } from './config/API';
 
 const App = () => {
   const [color,setColor] = useState("bg-gray-900")
-  const [cookies] = useCookies(['token']);
-    useEffect(()=>{
-        if(cookies.token){
-          setAuthToken(cookies.token)
-        }
-    },[cookies.token])
-  return cookies.token ?(
+
+  return (
     <div className='w-full'>
         <Router>
             <Switch>
@@ -38,7 +31,7 @@ const App = () => {
             </Switch>
         </Router>
     </div>  
-  ):null
+  )
 }
 
 export default App

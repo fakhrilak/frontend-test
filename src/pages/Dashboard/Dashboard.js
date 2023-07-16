@@ -7,16 +7,30 @@ import { useHistory } from 'react-router-dom';
 const Dashboard = () => {
   const [cookies,removeCookie] = useCookies(['token']);
   const [dataTable,setDataTable] = useState()
+  const [labelsChart,setLabelsChart] = useState()
   const [chart,setChart] = useState()
+  const [per_page,setPer_page] = useState(2)
+  const [page,setPage] = useState()
   const history = useHistory()
   useEffect(()=>{
     if(cookies.token){
       setAuthToken(cookies.token)
     }
-    API.get("/ruas?per_page=5&page=1",config)
+    API.get(`/ruas?per_page=${per_page}&page=${page}`,config)
     .then((res)=>{
-      setDataTable(res.data.data)
+      setDataTable(res.data)
       setChart(()=>{
+         API.get("/unit")
+        .then((res)=>{
+          setLabelsChart(res.data.data)
+        })
+        .catch((err)=>{
+          alert(err.response.data.message)
+        })
+        let label = []
+        for(let i in labelsChart){
+          label.push("Unit "+labelsChart[i]["id"])
+        }
         return(
           <div className='grid grid-cols-3 h-10/12'>
          <div className='col-span-2'>
@@ -26,8 +40,8 @@ const Dashboard = () => {
                 axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
                 height={250}
                 data={{
-                  labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                  datasets: [{ values: [18, 40, 30, 35, 8, 52, 17, 4] }],
+                  labels: label,
+                  datasets: [{ values: [18, 40, 30, 35, 8, 52, 17, 4,10] }],
                 }}
               />
           </div>
@@ -72,8 +86,15 @@ const Dashboard = () => {
                 {"name":"Unit Kerja","data":["unit_id"],"type":"text"},
                 {"name":"Status","data":["status"],"type":"text"}
               ],
-              body : dataTable
-        }}/>
+              body : dataTable.data
+              
+            }}
+            res={dataTable}
+            page={page}
+            setPage={setPage}
+            per_page={per_page}
+            setPer_page={setPer_page}
+          />
       </div>:<div>Loading</div>}
     </div>
   )

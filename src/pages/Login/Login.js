@@ -11,6 +11,7 @@ import { getCoocies } from '../../halper/coocies';
 const Login = (props) => {
   const [newItem, setNewItem] = useState(datalogin);
   const [cookies, setCookie] = useCookies(['token']);
+  const [triger,setTriger] = useState()
   const history = useHistory()
   const handleSubmitForm = () => {
     let data = {}
@@ -47,6 +48,7 @@ const Login = (props) => {
                 index={index}
                 newItem={newItem}
                 setNewItem={setNewItem}
+                setTriger={setTriger}
               />
             </div>
           ))}

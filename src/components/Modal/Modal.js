@@ -11,7 +11,7 @@ const Modal = (props) => {
             onClick={()=>handleshow()}
             >
           </div>
-          <div className={`fixed text-white w-11/12 lg:w-5/12 bg-gray-800 bottom-px top-5 right-0 left-1 rounded-lg  shadow-2xl z-50 `}>
+          <div className={`fixed overflow-y-auto text-white w-11/12 lg:w-5/12 bg-gray-800 bottom-px top-5 right-0 left-1 rounded-lg  shadow-2xl z-50 `}>
                 {props.children}
           </div>
         </div>
