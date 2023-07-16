@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [labelsChart,setLabelsChart] = useState()
   const [chart,setChart] = useState()
   const [per_page,setPer_page] = useState(2)
-  const [page,setPage] = useState()
+  const [page,setPage] = useState(1)
   const history = useHistory()
   useEffect(()=>{
     if(cookies.token){
@@ -19,47 +19,7 @@ const Dashboard = () => {
     API.get(`/ruas?per_page=${per_page}&page=${page}`,config)
     .then((res)=>{
       setDataTable(res.data)
-      setChart(()=>{
-         API.get("/unit")
-        .then((res)=>{
-          setLabelsChart(res.data.data)
-        })
-        .catch((err)=>{
-          alert(err.response.data.message)
-        })
-        let label = []
-        for(let i in labelsChart){
-          label.push("Unit "+labelsChart[i]["id"])
-        }
-        return(
-          <div className='grid grid-cols-3 h-10/12'>
-         <div className='col-span-2'>
-              <ReactFrappeChart
-                type="bar"
-                colors={["#21ba45"]}
-                axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
-                height={250}
-                data={{
-                  labels: label,
-                  datasets: [{ values: [18, 40, 30, 35, 8, 52, 17, 4,10] }],
-                }}
-              />
-          </div>
-          <div>
-          <ReactFrappeChart
-                type="pie"
-                colors={["#21ba45"]}
-                // axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
-                // height={300}
-                data={{
-                  labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                  datasets: [{ values: [18, 40, 30, 35, 8, 52, 17, 4] }],
-                }}
-              />
-          </div> 
-      </div>
-        )
-      })
+      // })
     })
     .catch((err)=>{
       if(err.response.status == 401){
@@ -70,9 +30,52 @@ const Dashboard = () => {
         alert(err.response.data.message)
       }
     })
+  },[page,per_page])
+  useEffect(()=>{
+    setChart(
+      // ()=>{
+      //  API.get("/unit")
+      // .then((res)=>{
+      //   setLabelsChart(res.data.data)
+      // })
+      // .catch((err)=>{
+      //   alert(err.response.data.message)
+      // })
+      // let label = []
+      // for(let i in labelsChart){
+      //   label.push("Unit "+labelsChart[i]["id"])
+      // }
+      // return(
+        <div className='grid grid-cols-3 h-10/12'>
+          <div className='col-span-2'>
+                <ReactFrappeChart
+                  type="bar"
+                  colors={["#21ba45"]}
+                  axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
+                  height={250}
+                  data={{
+                    labels: ["jan","feb","mar","apr","mei","jun","jul"],
+                    datasets: [{ values: [18, 40, 30, 35, 8, 52, 17, 4,10] }],
+                  }}
+                />
+            </div>
+            <div>
+            <ReactFrappeChart
+                  type="pie"
+                  colors={["#21ba45"]}
+                  // axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
+                  // height={300}
+                  data={{
+                    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                    datasets: [{ values: [18, 40, 30, 35, 8, 52, 17, 4] }],
+                  }}
+                />
+          </div> 
+        </div>
+      )
   },[])
   return (
-    <div>
+    <div className='mt-10 w-12/12 m-auto'>
       {chart}
       {dataTable ?<div className='mt-10 w-12/12 m-auto'>
           <Table 
@@ -86,8 +89,7 @@ const Dashboard = () => {
                 {"name":"Unit Kerja","data":["unit_id"],"type":"text"},
                 {"name":"Status","data":["status"],"type":"text"}
               ],
-              body : dataTable.data
-              
+              body : dataTable.data 
             }}
             res={dataTable}
             page={page}

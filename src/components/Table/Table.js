@@ -39,7 +39,7 @@ const Table = ({data,res,page,setPage,per_page,setPer_page}) => {
             </table>
         </div>
         
-        <div className='flex justify-between mt-5'>
+        <div className='flex w-11/12 justify-between mt-5'>
             <div/>
             <div className='grid grid-cols-6 gap-5'>
                     <select className='col-span-3 rounded text-center bg-gray-900 border border-gray-300 text-gray-300'       
